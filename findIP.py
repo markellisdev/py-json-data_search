@@ -6,9 +6,10 @@ import requests
 from unittest.main import main
 
 log = logging.getLogger(__name__)
-url = 'https://stat.ripe.net/data/country-resource-list/data.json?resource=US&v4_format=prefix'
 
 class IPAddress:
+    # moved url inside instead as attribute instead of passing it in, since it's static
+    url = 'https://stat.ripe.net/data/country-resource-list/data.json?resource=US&v4_format=prefix'
 
     def __init__(self) -> None:
         pass
@@ -50,7 +51,7 @@ userInput = sys.argv[1]
 if not IPAddress.validateIP(userInput):
     print('Not a valid ip: %s', userInput)
 else:
-    IPAddress.searchResponse(IPAddress.getResponse(url), userInput)
+    IPAddress.searchResponse(IPAddress.getResponse(IPAddress.url), userInput)
 
 print('Hello, ' + userInput)
 
