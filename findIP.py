@@ -1,6 +1,6 @@
-import socket
 import sys, logging, json
 import requests
+import ipaddress
 
 
 from unittest.main import main
@@ -17,8 +17,13 @@ class IPAddress:
     # Function to validate if IP is an actual address    
     def validateIP(ipaddr):
         try:
-            socket.inet_aton(ipaddr)
-        except socket.error:
+            ip = ipaddress.ip_address(ipaddr)
+            print('%s is a correct IP%s address.' % (ip, ip.version))
+        except ValueError:
+            print('address/netmask is invalid: %s' % ipaddr)
+            return False
+        except:
+            print('Usage : %s  ip' % sys.argv[0])
             return False
         return True
 
