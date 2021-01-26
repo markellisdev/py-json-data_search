@@ -18,47 +18,46 @@ class IPAddress:
     def validateIP(ipaddr):
         try:
             ip = ipaddress.ip_address(ipaddr)
-            print('%s is a correct IP%s address.' % (ip, ip.version))
         except ValueError:
             print('address/netmask is invalid: %s' % ipaddr)
             return False
-        except:
-            print('Usage : %s  ip' % sys.argv[0])
-            return False
         return True
 
-    # Get json response from url
+
+    # Get response from url
     def getResponse(url):
         operUrl = requests.get(url)
         if(operUrl.status_code==200):
-            # Convert to dictionary
-            data = operUrl.json()
-            with open('data.txt', 'w') as outfile:
-                json.dump(data, outfile)
-
+            # Convert to dictionary now it's own function below
+            # data = operUrl.json()
+            pass
         else:
             print("Error receiving data", operUrl.getcode())
+        return operUrl
+
+    # Convert to dict
+    def convertResponseToJson(response):
+        data = response.json()
         return data
     
     def searchResponse(response, addy):
         foundIPAddress = response['data']['resources']['ipv4']
         for address in foundIPAddress:
+            # Since all addresses have '/22', split at '/' and test only first value which is ip
             if address.split('/')[0] == addy:
-                print("It's in here: %s" % addy)
+                # print("It's in here: %s" % addy)
+                return True
             else:
-                pass
+                return False
 
 
 # Get user input IP address from sys argv
 userInput = sys.argv[1] 
 
-# Is IP address valid? If so, search dict for it
-if not IPAddress.validateIP(userInput):
-    print('Not a valid ip: %s', userInput)
-else:
-    IPAddress.searchResponse(IPAddress.getResponse(IPAddress.url), userInput)
-
-print('Hello, ' + userInput)
+# Is IP address is valid, search dict for it
+if IPAddress.validateIP(userInput):
+    IPAddress.searchResponse(IPAddress.convertResponseToJson(IPAddress.getResponse(IPAddress.url)), userInput)
+    # IPAddress.searchResponse(IPAddress.getResponse(IPAddress.url), userInput)
 
 
 

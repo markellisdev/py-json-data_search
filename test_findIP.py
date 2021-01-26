@@ -1,16 +1,17 @@
 try:
     import unittest
-    import findIP
+    from findIP import IPAddress
     print("All modules loaded successfully!")
 except:
     print("Some modules were not loaded.")
 
 class TestFunc(unittest.TestCase):
     """
-    Test Case for User Input function
+    Test Case for return of valid JSON
     """
-    def test_user_input_is_not_null(self):
-        self.assertIsNotNone(findIP.userInput)
+
+    def getresponse_returns_valid_json(self):
+        self.assertIsNotNone(IPAddress.getResponse)
 
 if __name__ == "__main__":
     unittest.main()
