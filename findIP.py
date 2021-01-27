@@ -45,24 +45,26 @@ class IPAddress:
         for address in foundIPAddress:
             # Since all addresses have '/22', split at '/' and test only first value which is ip
             if address.split('/')[0] == addy:
-                # print("It's in here: %s" % addy)
+                print("True: %s" % addy)
                 return True
             else:
+                print("False: %s" % addy)
                 return False
 
 
-# Get user input IP address from sys argv
-userInput = sys.argv[1] 
 
-# Is IP address is valid, search dict for it
-if IPAddress.validateIP(userInput):
-    IPAddress.searchResponse(IPAddress.convertResponseToJson(IPAddress.getResponse(IPAddress.url)), userInput)
-    # IPAddress.searchResponse(IPAddress.getResponse(IPAddress.url), userInput)
 
 
 
 
 if __name__ == '__main__':
+    # Get user input IP address from sys argv
+    userInput = sys.argv[1] 
+
+    # If IP address is valid, search dict for it
+    if IPAddress.validateIP(userInput):
+        IPAddress.searchResponse(IPAddress.convertResponseToJson(IPAddress.getResponse(IPAddress.url)), userInput)
+        # IPAddress.searchResponse(IPAddress.getResponse(IPAddress.url), userInput)
     main
 
 # Function to confirm I can actually test. Still need to write actual tests for real functions, not math function.
