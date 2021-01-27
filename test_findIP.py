@@ -20,7 +20,7 @@ Initial test to see that actual response is returned
 #     assert_is_not_none(response)
 
 """
-Not yet working mock because need access requests.get direct
+Simple test to confirm there is return value. Will be improved next
 """
 
 @patch('findIP.requests.get')
@@ -29,7 +29,7 @@ def test_getting_API_response(mock_get):
     mock_get.status_code = 200
 
     # Call the service, which will send a request to the server.
-    operUrl = IPAddress.getResponse('https://stat.ripe.net/data/country-resource-list/data.json?resource=US&v4_format=prefix')
+    operUrl = IPAddress.getResponse('url')
 
     # If the request is sent successfully, then I expect a response to be returned.
     assert_is_not_none(operUrl)
