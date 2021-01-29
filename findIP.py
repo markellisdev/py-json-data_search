@@ -36,7 +36,7 @@ class IPAddress:
         return operUrl
 
     # Convert to dict
-    def convertResponseToJson(response):
+    def convertResponseToDict(response):
         data = response.json()
         return data
     
@@ -52,21 +52,12 @@ class IPAddress:
                 return False
 
 
-
-
-
-
-
 if __name__ == '__main__':
     # Get user input IP address from sys argv
     userInput = sys.argv[1] 
 
     # If IP address is valid, search dict for it
     if IPAddress.validateIP(userInput):
-        IPAddress.searchResponse(IPAddress.convertResponseToJson(IPAddress.getResponse(IPAddress.url)), userInput)
-        # IPAddress.searchResponse(IPAddress.getResponse(IPAddress.url), userInput)
-    main
+        IPAddress.searchResponse(IPAddress.convertResponseToDict(IPAddress.getResponse(IPAddress.url)), userInput)
 
-# Function to confirm I can actually test. Still need to write actual tests for real functions, not math function.
-# def madd(x,y):
-#     return x + y
+    main
