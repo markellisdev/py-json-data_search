@@ -1,11 +1,10 @@
-import sys, logging, json
+import sys, json
 import requests
 import ipaddress
 
 
 from unittest.main import main
 
-log = logging.getLogger(__name__)
 
 class IPAddress:
     # moved url inside instead as attribute instead of passing it in, since it's static
@@ -24,7 +23,7 @@ class IPAddress:
         return True
 
 
-    # Get response from url
+    # Get response from url (expected json)
     def getResponse(url):
         operUrl = requests.get(url)
         if(operUrl.status_code==200):
@@ -39,12 +38,14 @@ class IPAddress:
     def convertResponseToDict(response):
         data = response.json()
         return data
-    
+
+    # Function to search, takes dict and address to search for. Returns True or False   
     def searchResponse(response, addy):
         foundIPAddress = response['data']['resources']['ipv4']
         for address in foundIPAddress:
             # Since all addresses have '/22', split at '/' and test only first value which is ip
             if address.split('/')[0] == addy:
+                # Print statements only for human readability/affirmation. I would remove to use in automation
                 print("True: %s" % addy)
                 return True
             else:
